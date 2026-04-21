@@ -6,7 +6,10 @@ import {
   Code, Users, Clock, Star, RefreshCw, Check
 } from 'lucide-react'
 
-const API_BASE = '/api'
+// Determine API base: Use localhost for development, Render for production
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? 'http://localhost:5000/api'
+  : 'https://idea-forage-backend.onrender.com/api'
 
 // ─── Reusable UI ─────────────────────────────────────────────────────────────
 
@@ -22,8 +25,8 @@ function GlassCard({ children, style = {}, className = '', glow = '' }) {
   const glowStyle = glow === 'blue'
     ? { border: '1px solid rgba(0,212,255,0.2)', boxShadow: '0 0 40px rgba(0,212,255,0.06)' }
     : glow === 'purple'
-    ? { border: '1px solid rgba(168,85,247,0.2)', boxShadow: '0 0 40px rgba(168,85,247,0.06)' }
-    : {}
+      ? { border: '1px solid rgba(168,85,247,0.2)', boxShadow: '0 0 40px rgba(168,85,247,0.06)' }
+      : {}
   return (
     <div className={`glass ${className}`}
       style={{
@@ -308,8 +311,8 @@ function JudgePanel({ evaluation, onNext, loading }) {
             background: avg >= 70
               ? 'linear-gradient(135deg, #10b981, #00d4ff)'
               : avg >= 50
-              ? 'linear-gradient(135deg, #f59e0b, #a855f7)'
-              : 'linear-gradient(135deg, #ef4444, #f472b6)',
+                ? 'linear-gradient(135deg, #f59e0b, #a855f7)'
+                : 'linear-gradient(135deg, #ef4444, #f472b6)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
           }}>{avg}</span>
@@ -654,6 +657,7 @@ function ErrorToast({ message, onClose }) {
       borderRadius: 14,
       background: 'rgba(239,68,68,0.15)',
       border: '1px solid rgba(239,68,68,0.4)',
+      WebkitBackdropFilter: 'blur(20px)',
       backdropFilter: 'blur(20px)',
       color: '#fca5a5',
       fontSize: 14, fontWeight: 500,
@@ -781,6 +785,7 @@ export default function Dashboard() {
         padding: '14px 32px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         background: 'rgba(3,7,18,0.9)',
+        WebkitBackdropFilter: 'blur(20px)',
         backdropFilter: 'blur(20px)',
         borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}>
